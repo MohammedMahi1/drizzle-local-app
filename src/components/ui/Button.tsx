@@ -9,6 +9,7 @@ type ButtonProps = {
 export const Button = ({ children, ...rest }: ButtonProps) => {
     return (
         <Pressable
+        className='bg-'
             style={({ pressed }) => [
                 ButtonStyle.Button,
                 {

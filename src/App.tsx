@@ -12,6 +12,9 @@ import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
 import migrations from '../drizzle/migrations';
 import { DarkTheme } from '../theme/DarkTheme';
 import { DefaultTheme } from '../theme/DefaultTheme';
+import "../global.css"
+
+
 Asset.loadAsync([
   ...NavigationAssets,
   require('./assets/newspaper.png'),

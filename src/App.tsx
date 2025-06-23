@@ -5,7 +5,12 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as React from 'react';
 import { useColorScheme } from 'react-native';
 import { Navigation } from './navigation';
-
+import { Suspense } from 'react';
+import { ActivityIndicator } from 'react-native';
+import { SQLiteProvider, openDatabaseSync } from 'expo-sqlite';
+import { drizzle } from 'drizzle-orm/expo-sqlite';
+import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
+import migrations from '../drizzle/migrations';
 Asset.loadAsync([
   ...NavigationAssets,
   require('./assets/newspaper.png'),
@@ -14,24 +19,37 @@ Asset.loadAsync([
 
 SplashScreen.preventAutoHideAsync();
 
+export const DATABASE_NAME = 'tasks';
+
+
 export function App() {
   const colorScheme = useColorScheme();
 
   const theme = colorScheme === 'dark' ? DarkTheme : DefaultTheme
-
+  const expoDb = openDatabaseSync(DATABASE_NAME);
+  const db = drizzle(expoDb);
+  const { success, error } = useMigrations(db, migrations);
   return (
-    <Navigation
-      theme={theme}
-      linking={{
-        enabled: 'auto',
-        prefixes: [
-          // Change the scheme to match your app's scheme defined in app.json
-          'helloworld://',
-        ],
-      }}
-      onReady={() => {
-        SplashScreen.hideAsync();
-      }}
-    />
+    <Suspense fallback={<ActivityIndicator size="large" />}>
+      <SQLiteProvider
+        databaseName={DATABASE_NAME}
+        options={{ enableChangeListener: true }}
+        useSuspense>
+        <Navigation
+          theme={theme}
+          linking={{
+            enabled: 'auto',
+            prefixes: [
+              // Change the scheme to match your app's scheme defined in app.json
+              'helloworld://',
+            ],
+          }}
+          onReady={() => {
+            SplashScreen.hideAsync();
+          }}
+        />
+
+      </SQLiteProvider>
+    </Suspense>
   );
 }

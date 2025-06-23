@@ -8,6 +8,7 @@ import * as schema from '../../../db/schema';
 const Home = () => {
       const db = useSQLiteContext();
   const drizzleDb = drizzle(db, { schema});
+  
   return (
     <Container>
         <Text style={{color:"#fff"}}>Home</Text>

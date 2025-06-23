@@ -29,6 +29,7 @@ const Home = () => {
             <Button onPress={getDb} >Get Users</Button>
             <Button onPress={addDb}>Add User</Button>
             <Button onPress={deleteDb}>Delete User</Button>
+            
         </Container>
     )
 }

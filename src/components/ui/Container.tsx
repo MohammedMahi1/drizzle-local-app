@@ -1,12 +1,24 @@
-import React from 'react'
-import { View } from 'react-native'
+import React, { ReactNode } from 'react'
+import { StyleSheet, View, ViewProps } from 'react-native'
 
-const Container = () => {
+type ConotainerProps = {
+    children:ReactNode;
+} & ViewProps
+
+
+const Container = ({children,...rest}:ConotainerProps) => {
   return (
-    <View>
-        
+    <View style={styleContainer.container} {...rest}>
+        {children}
     </View>
   )
 }
 
+
+const styleContainer = StyleSheet.create({
+  container: {
+    paddingLeft:50 ,
+    paddingRight:50
+  },
+});
 export default Container

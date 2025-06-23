@@ -14,7 +14,7 @@ const RootStack = createNativeStackNavigator({
       screen: Home,
       options: {
         title: 'Home',
-        headerShown: false,
+        headerShown: true,
       },
     },
     // Profile: {

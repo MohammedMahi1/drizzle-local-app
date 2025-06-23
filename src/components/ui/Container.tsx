@@ -8,20 +8,10 @@ type ConotainerProps = {
 
 const Container = ({ children, ...rest }: ConotainerProps) => {
     return (
-        <View style={styleContainer.container} {...rest}>
+        <View {...rest}>
             {children}
         </View>
     )
 }
 
-
-const styleContainer = StyleSheet.create({
-    container: {
-        paddingLeft: 50,
-        paddingRight: 50,
-    },
-    dark:{
-        backgroundColor:"#1e1e1e"
-    },
-});
 export default Container

@@ -9,9 +9,8 @@ type ButtonProps = {
 export const Button = ({ children, ...rest }: ButtonProps) => {
     return (
         <Pressable
-        className='bg-'
+        className='bg-white px-7 py-6 rounded-lg '
             style={({ pressed }) => [
-                ButtonStyle.Button,
                 {
                     transform: [{ scale: pressed ? 0.95 : 1 }],
                 }
@@ -20,7 +19,7 @@ export const Button = ({ children, ...rest }: ButtonProps) => {
         >
             {
                 typeof children === "string" ?
-                    <Text style={ButtonStyle.Text}>
+                    <Text className='text-black font-semibold'>
                         {children}
                     </Text>
                     :
@@ -42,7 +41,8 @@ const ButtonStyle = StyleSheet.create(
         },
         Text: {
             fontWeight: "700",
-            fontSize: 24
+            fontSize: 24,
+            color:"#ffffff"
         },
 
     }

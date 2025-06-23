@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Pressable, PressableProps, Text, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 type TaskProps = {
@@ -63,19 +63,19 @@ export const Tasks = ({ task, isChecked, id }: TaskItem) => {
 
 const TaskItem = ({ title }: TaskProps) => {
   const [isOpen, setIsOpen] = useState(false)
+
   return (
     <View className='border-b-2 border-white'>
-      <TaskTrigger title={title} onPress={()=>setIsOpen(!isOpen)}/>
+      <TaskTrigger title={title} onPress={() => setIsOpen(!isOpen)} />
       {
-      isOpen &&
-          <FlatList
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ justifyContent: "space-between" }}
-        data={data}
-        renderItem={({ item }) => <Tasks task={item.task} key={item.id} id={item.id} isChecked={item.isChecked} />}
-      />  
-    }
-
+        isOpen &&
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ justifyContent: "space-between" }}
+          data={data}
+          renderItem={({ item }) => <Tasks task={item.task} key={item.id} id={item.id} isChecked={item.isChecked} />}
+        />
+      }
     </View>
   )
 }

@@ -1,13 +1,7 @@
 import React from 'react'
-import { FlatList, Text, View } from 'react-native'
-import Container from '../../components/ui/Container'
-import { useSQLiteContext } from 'expo-sqlite';
-import { drizzle } from 'drizzle-orm/expo-sqlite';
-import * as schema from '../../../db/schema';
-import { Button } from '../../components/ui/Button';
+import { FlatList} from 'react-native'
 import TaskItem from '../../components/content/TaskItem';
-
-const data = [
+const dat = [
     { id: 1, day: "monday" },
     { id: 2, day: "tuesday" },
     { id: 3, day: "wednesday" },
@@ -35,15 +29,15 @@ const Home = () => {
     // const deleteDb = async() => {
     //   await drizzleDb.delete(schema.users).then(()=>console.log("Users deleted"))
     // }
-    return (
-        <FlatList
-            // style={{flex:1}}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ justifyContent: "space-between" }}
-            data={data}
-            renderItem={({ item }) => <TaskItem title={item.day} key={item.id} />}
-        />
-    )
+    return(
+                <FlatList
+                    // style={{flex:1}}
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{ justifyContent: "space-between" }}
+                    data={dat}
+                    renderItem={({ item }) => <TaskItem title={item.day} key={item.id} />}
+                />
+        )
 }
 
 export default Home

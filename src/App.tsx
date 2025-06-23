@@ -12,6 +12,7 @@ import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
 import migrations from '../drizzle/migrations';
 import { DarkTheme } from '../theme/DarkTheme';
 import { DefaultTheme } from '../theme/DefaultTheme';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
 Asset.loadAsync([
@@ -33,11 +34,13 @@ export function App() {
   const db = drizzle(expoDb);
   const { success, error } = useMigrations(db, migrations);
   return (
+    
     <Suspense fallback={<ActivityIndicator size="large" />}>
       <SQLiteProvider
         databaseName={DATABASE_NAME}
         options={{ enableChangeListener: true }}
         useSuspense>
+        <GestureHandlerRootView>
         <Navigation
           theme={theme}
           linking={{
@@ -50,7 +53,8 @@ export function App() {
           onReady={() => {
             SplashScreen.hideAsync();
           }}
-        />
+          />
+          </GestureHandlerRootView> 
 
       </SQLiteProvider>
     </Suspense>

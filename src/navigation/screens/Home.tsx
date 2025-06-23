@@ -20,11 +20,15 @@ const Home = () => {
         }).then(()=>console.log("you add new user"))
 
     }
+    const deleteDb = async() => {
+      await drizzleDb.delete(schema.users).then(()=>console.log("Users deleted"))
+    }
     return (
         <Container>
             <Text style={{ color: "#fff" }}>Home</Text>
             <Button onPress={getDb} >Get Users</Button>
             <Button onPress={addDb}>Add User</Button>
+            <Button onPress={deleteDb}>Delete User</Button>
         </Container>
     )
 }

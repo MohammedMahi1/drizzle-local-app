@@ -10,7 +10,8 @@ import { SQLiteProvider, openDatabaseSync } from 'expo-sqlite';
 import { drizzle } from 'drizzle-orm/expo-sqlite';
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
 import migrations from '../drizzle/migrations';
-import { DarkTheme, DefaultTheme } from '../theme/theme';
+import { DarkTheme } from '../theme/DarkTheme';
+import { DefaultTheme } from '../theme/DefaultTheme';
 Asset.loadAsync([
   ...NavigationAssets,
   require('./assets/newspaper.png'),

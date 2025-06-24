@@ -1,10 +1,6 @@
 import React from 'react'
-import { FlatList, Text, View } from 'react-native'
-import Container from '../../components/ui/Container'
-import { useSQLiteContext } from 'expo-sqlite';
-import { drizzle } from 'drizzle-orm/expo-sqlite';
+import { FlatList} from 'react-native'
 import * as schema from '../../../db/schema';
-import { Button } from '../../components/ui/Button';
 import TaskItem from '../../components/content/TaskItem';
 const data = [
   { id: 1, day: "monday" },
@@ -16,9 +12,18 @@ const data = [
   { id: 7, day: "sunday" },
 ];
 const Home = () => {
-    const db = useSQLiteContext();
-    const drizzleDb = drizzle(db, { schema });
 
+
+    const addDb = () => {
+        drizzleDb.insert(schema.monday).values({
+            task: `Task number ${Math.floor(Math.random() * 1000)}`,
+            isChecked:true
+        }).then(() => console.log("you add new user"))
+
+    }
+    const deleteDb = async () => {
+        await drizzleDb.delete(schema.monday).then(() => console.log("Task deleted"))
+    }
     return (
         <>
         <FlatList

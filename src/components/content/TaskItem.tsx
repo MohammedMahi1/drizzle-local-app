@@ -71,6 +71,7 @@ const TaskItem = ({ title }: TaskProps) => {
         isOpen &&
         <FlatList
           showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
           contentContainerStyle={{ justifyContent: "space-between" }}
           data={data}
           renderItem={({ item }) => <Tasks task={item.task} key={item.id} id={item.id} isChecked={item.isChecked} />}

@@ -13,6 +13,8 @@ import migrations from '../drizzle/migrations';
 import { DarkTheme } from '../theme/DarkTheme';
 import { DefaultTheme } from '../theme/DefaultTheme';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 
 Asset.loadAsync([
@@ -34,29 +36,30 @@ export function App() {
   const db = drizzle(expoDb);
   const { success, error } = useMigrations(db, migrations);
   return (
-    
-    <Suspense fallback={<ActivityIndicator size="large" />}>
-      <SQLiteProvider
-        databaseName={DATABASE_NAME}
-        options={{ enableChangeListener: true }}
-        useSuspense>
-        <GestureHandlerRootView>
-        <Navigation
-          theme={theme}
-          linking={{
-            enabled: 'auto',
-            prefixes: [
-              // Change the scheme to match your app's scheme defined in app.json
-              'helloworld://',
-            ],
-          }}
-          onReady={() => {
-            SplashScreen.hideAsync();
-          }}
-          />
-          </GestureHandlerRootView> 
+    <Provider store={store}>
+      <Suspense fallback={<ActivityIndicator size="large" />}>
+        <SQLiteProvider
+          databaseName={DATABASE_NAME}
+          options={{ enableChangeListener: true }}
+          useSuspense>
+          <GestureHandlerRootView>
+            <Navigation
+              theme={theme}
+              linking={{
+                enabled: 'auto',
+                prefixes: [
+                  // Change the scheme to match your app's scheme defined in app.json
+                  'helloworld://',
+                ],
+              }}
+              onReady={() => {
+                SplashScreen.hideAsync();
+              }}
+            />
+          </GestureHandlerRootView>
 
-      </SQLiteProvider>
-    </Suspense>
+        </SQLiteProvider>
+      </Suspense>
+    </Provider>
   );
 }

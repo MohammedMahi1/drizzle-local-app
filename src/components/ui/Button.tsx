@@ -9,7 +9,7 @@ type ButtonProps = {
 export const Button = ({ children, ...rest }: ButtonProps) => {
     return (
         <Pressable
-        className='bg-white px-7 py-6 rounded-lg '
+        className='bg-white px-7 py-12 text-center rounded-lg '
             style={({ pressed }) => [
                 {
                     transform: [{ scale: pressed ? 0.95 : 1 }],

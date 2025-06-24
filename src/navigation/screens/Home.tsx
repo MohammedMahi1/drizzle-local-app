@@ -17,16 +17,16 @@ const data = [
 
 const Home = () => {
 
+    
     return (
         <FlatList
-            // style={{flex:1}}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ justifyContent: "space-between" }}
             data={data}
             renderItem={({ item }) => <TaskItem title={item.day} key={item.id} />}
         />
+
     )
 }
 
 export default Home
-

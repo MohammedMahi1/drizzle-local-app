@@ -8,6 +8,7 @@ import { Button } from '../../components/ui/Button';
 import TaskItem from '../../components/content/TaskItem';
 import { useAppDispatch } from '../../../hooks/useApp';
 import { getTasksController } from '../../../controller/taskController';
+import { useTask } from '../../../hooks/useTask';
 const data = [
     { id: 1, day: "monday" },
     { id: 2, day: "tuesday" },
@@ -18,15 +19,8 @@ const data = [
     { id: 7, day: "sunday" },
 ];
 const Home = () => {
-    const db = useSQLiteContext();
-    const drizzleDb = drizzle(db, { schema });
+    const {doSomething} = useTask()
 
-    const dispatch = useAppDispatch()
-    const getDb = async() => {
-        const result = await drizzleDb.select().from(schema.monday);
-        return console.log(result);
-        
-    }
     return (
         <>
             <FlatList
@@ -36,7 +30,7 @@ const Home = () => {
                 data={data}
                 renderItem={({ item }) => <TaskItem title={item.day} key={item.id} />}
             />
-            <Button onPress={()=>getTasksController(schema.monday)} >Get Users</Button>
+            <Button onPress={doSomething} >Get Users</Button>
         </>
     )
 }

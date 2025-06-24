@@ -18,21 +18,7 @@ const data = [
 const Home = () => {
     const db = useSQLiteContext();
     const drizzleDb = drizzle(db, { schema });
-    const getDb = async () => {
-        const result = await drizzleDb.select().from(schema.monday);
-        console.log(result);
 
-    }
-    const addDb = () => {
-        drizzleDb.insert(schema.monday).values({
-            task: `Task number ${Math.floor(Math.random() * 1000)}`,
-            isChecked:true
-        }).then(() => console.log("you add new user"))
-
-    }
-    const deleteDb = async () => {
-        await drizzleDb.delete(schema.monday).then(() => console.log("Task deleted"))
-    }
     return (
         <>
         <FlatList
@@ -42,9 +28,6 @@ const Home = () => {
             data={data}
             renderItem={({ item }) => <TaskItem title={item.day} key={item.id} />}
             />
-            <Button onPress={getDb} >Get Users</Button>
-            <Button onPress={addDb}>Add User</Button>
-            <Button onPress={deleteDb}>Delete User</Button>
             </>
     )
 }

@@ -19,7 +19,8 @@ const data = [
     { id: 7, day: "sunday" },
 ];
 const Home = () => {
-    const {doSomething} = useTask()
+
+    const {getTask} = useTask()
 
     return (
         <>
@@ -30,7 +31,7 @@ const Home = () => {
                 data={data}
                 renderItem={({ item }) => <TaskItem title={item.day} key={item.id} />}
             />
-            <Button onPress={doSomething} >Get Users</Button>
+            <Button onPress={()=>getTask(schema.friday)} >Get Users</Button>
         </>
     )
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Pressable, PressableProps, Text, View } from 'react-native'
+import { Pressable, PressableProps, Text, TextInput, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import Checkbox from 'expo-checkbox';
 type TaskProps = {
@@ -50,14 +50,14 @@ type TaskItem = {
 export const Tasks = ({ task, isChecked }: TaskItem) => {
   const [isCh, setCh] = useState(false);
   return (
-    <View className='px-8 flex flex-row gap-4'>
+    <View className=' flex flex-row gap-4'>
       <Checkbox
         disabled={false}
         value={isCh}
         onValueChange={setCh}
-        color={isChecked ? '#4630EB' : undefined}
+        color={isCh ? '#ff6a00' : "#333333"}
       />
-      <Text className='text-white text-xl'>{task}</Text>
+      <Text className={'text-white text-xl'}>{task}</Text>
     </View>
   )
 }
@@ -76,14 +76,18 @@ const TaskItem = ({ title }: TaskProps) => {
       <TaskTrigger title={title} onPress={() => setIsOpen(!isOpen)} />
       {
         isOpen &&
-        <View>
+        <View className='px-8 pb-8'>
         <FlatList
         className='pb-6'
         showsVerticalScrollIndicator={false}
         scrollEnabled={false}
         contentContainerStyle={{ justifyContent: "space-between" }}
         data={data}
-        renderItem={({ item }) => <Tasks task={item.task} key={item.id} id={item.id} isChecked={item.isChecked} />}
+        renderItem={({ item }) => <Tasks task={item.task} key={item.id} isChecked={item.isChecked} />}
+        />
+        <TextInput
+        placeholder='Add a new task...'
+        className='placeholder:text-disable text-xl dark:text-white'
         />
       </View>
       }

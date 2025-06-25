@@ -10,8 +10,7 @@ import { useAppSelector } from '../../../hooks/useApp';
 
 const Home = () => {
     const task = useAppSelector((state)=>state.task)
-console.log(Object.keys(task));
-    
+
     return (
         <>
             <FlatList

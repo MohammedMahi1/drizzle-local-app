@@ -16,8 +16,15 @@ const data = [
 ];
 
 const Home = () => {
-const {getTask}= useTask()
-    
+const {addTask,getTask}= useTask()
+    const addData = ()=>{
+        addTask(schema.dailyTask,{
+            task_detail:"React native"
+        })
+    }
+    const getData = ()=>{
+        getTask(schema.dailyTask)
+    }
     return (
 <>
         <FlatList
@@ -26,7 +33,7 @@ const {getTask}= useTask()
             data={data}
             renderItem={({ item }) => <TaskItem title={item.day} key={item.id} />}
         />
-        <Button onPress={()=>getTask(schema.day)}>Get tasks</Button>
+        <Button onPress={addData}>Get tasks</Button>
 </>
 
     )

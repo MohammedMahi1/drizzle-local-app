@@ -35,7 +35,7 @@ export const data = [
 const TaskTrigger = ({ title, ...rest }: TaskTriggerProps) => {
   return (
     <Pressable className='px-8 py-16' {...rest}>
-      <Text className='text-white text-7xl font-semibold'>{title}</Text>
+      <Text className='text-white text-6xl font-semibold'>{title}</Text>
     </Pressable>
   )
 }

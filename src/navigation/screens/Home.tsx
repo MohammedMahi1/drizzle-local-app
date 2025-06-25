@@ -9,15 +9,15 @@ import { useAppSelector } from '../../../hooks/useApp';
 
 
 const Home = () => {
-    const data = useAppSelector((state)=>state.task)
-console.log(data);
-
+    const task = useAppSelector((state)=>state.task)
+console.log(Object.keys(task));
+    
     return (
         <>
             <FlatList
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ justifyContent: "space-between" }}
-                data={Object.keys(data)}
+                data={Object.keys(task)}
                 renderItem={({ item }) => <TaskItem title={item} key={item} />}
             />
             {/* <Button onPress={updateData}>Update tasks</Button> */}

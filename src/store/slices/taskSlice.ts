@@ -13,7 +13,14 @@ type Task = {
     isChecked: boolean
 }
 
-type DayType = "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday";
+type DayType = 
+  "MONDAY" | 
+  "TUESDAY" | 
+  "WEDNESDAY" | 
+  "THURSDAY" | 
+  "FRIDAY" | 
+  "SATURDAY" | 
+  "SUNDAY";
 
 
 type InitialType = {
@@ -21,20 +28,21 @@ type InitialType = {
 }
 
 const initialState: InitialType = {
-    "monday": [],
-    "tuesday": [],
-    "friday": [],
-    "saturday": [],
-    "sunday": [],
-    "thursday": [],
-    "wednesday": [],
+  "MONDAY": [],
+  "TUESDAY": [],
+  "WEDNESDAY": [],
+  "THURSDAY": [],
+  "FRIDAY": [],
+  "SATURDAY": [],
+  "SUNDAY": []
 }
+
 
 const taskSlice = createSlice({
     name: "task",
     initialState,
     reducers: {
-        
+
     },
 })
 

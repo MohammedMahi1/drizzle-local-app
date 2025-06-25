@@ -12,7 +12,7 @@ export function useTask() {
     //Get query hook
     const getTask = async (table: any) => {
         const dd = await drizzleDb.select().from(table);
-        console.log(dd);
+       return dd
     };
 
     //Add query hook

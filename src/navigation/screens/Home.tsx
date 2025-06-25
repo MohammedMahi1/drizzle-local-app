@@ -17,15 +17,14 @@ const data = [
 
 const Home = () => {
     const { addTask, getTask, deleteTask, updateTask, findTask } = useTask()
-
     const addData = async() => {
         const idd = findTask(schema.dailyTask, 6)
          addTask(schema.day, {
             daily_task_id: await idd
         })
     }
-    const getData = () => {
-        getTask(schema.day)
+    const getData = async () => {
+        return await getTask(schema.day)
     }
     const deleteData = () => {
         deleteTask(schema.day, 1)

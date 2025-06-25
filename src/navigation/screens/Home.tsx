@@ -16,7 +16,7 @@ const data = [
 ];
 
 const Home = () => {
-const {addTask,getTask,deleteTask}= useTask()
+const {addTask,getTask,deleteTask,updateTask,findTask}= useTask()
     const addData = ()=>{
         addTask(schema.dailyTask,{
             task_detail:"Laravel 11+"
@@ -28,6 +28,14 @@ const {addTask,getTask,deleteTask}= useTask()
     const deleteData = ()=>{
         deleteTask(schema.dailyTask,4)
     }
+    const updateData = ()=>{
+        updateTask(schema.dailyTask,{
+            task_detail:"React native."
+        },5)
+    }
+    const findData = ()=>{
+        findTask(schema.dailyTask,6)
+    }
     return (
 <>
         <FlatList
@@ -37,7 +45,9 @@ const {addTask,getTask,deleteTask}= useTask()
             renderItem={({ item }) => <TaskItem title={item.day} key={item.id} />}
         />
         <Button onPress={getData}>Get tasks</Button>
+        <Button onPress={findData}>find tasks</Button>
         <Button onPress={addData}>add tasks</Button>
+        <Button onPress={updateData}>Update tasks</Button>
         <Button onPress={deleteData}>del tasks</Button>
 </>
 

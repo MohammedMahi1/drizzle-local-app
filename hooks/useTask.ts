@@ -17,31 +17,32 @@ export function useTask() {
 
     //Add query hook
     const addTask = (table: any, data: object) => {
-        drizzleDb.insert(table).values(data).then(()=>{
+        drizzleDb.insert(table).values(data).then(() => {
             console.log("Data added");
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log(err);
         });
     };
 
     //Delete query hook
-    const deleteTask = async(table: any,id:number) => {
-       return await drizzleDb.delete(table).where(eq(table.id, id)).then((e)=>console.log("deleted user : "+id));
+    const deleteTask = async (table: any, id: number) => {
+        return await drizzleDb.delete(table).where(eq(table.id, id)).then((e) => console.log("deleted user : " + id));
     };
 
     //Update query hook
-    const updateTask = (table: any, data: object) => {
-        drizzleDb.insert(table).values(data);
+    const updateTask = async (table: any, data: object,id:number) => {
+        return await drizzleDb.update(table)
+            .set(data)
+            .where(eq(table.id, id)).then((e)=>{
+                console.log("Task updated");
+            });
     };
 
 
     //Get one query hook
-    const findTask = async(table: any,id:number) => {
-        return await drizzleDb.select({
-            id:table.id
-        }).from(table).then((e)=>{
-        console.log(e);
-        });
+    const findTask = async (table: any, id: number) => {
+        const dd =  await drizzleDb.select(table).from(table).where(eq(table.id, id))
+        return console.log(dd[0]);
     };
 
 
@@ -49,6 +50,7 @@ export function useTask() {
         getTask,
         addTask,
         deleteTask,
-        updateTask
+        updateTask,
+        findTask
     };
 }

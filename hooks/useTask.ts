@@ -25,13 +25,23 @@ export function useTask() {
     };
 
     //Delete query hook
-    const deleteTask = async(table: any) => {
-       return await drizzleDb.delete(table).where(eq(table.id, table.id)).then((e)=>console.log("deleted user : "+table.id));
+    const deleteTask = async(table: any,id:number) => {
+       return await drizzleDb.delete(table).where(eq(table.id, id)).then((e)=>console.log("deleted user : "+id));
     };
 
     //Update query hook
     const updateTask = (table: any, data: object) => {
         drizzleDb.insert(table).values(data);
+    };
+
+
+    //Get one query hook
+    const findTask = async(table: any,id:number) => {
+        return await drizzleDb.select({
+            id:table.id
+        }).from(table).then((e)=>{
+        console.log(e);
+        });
     };
 
 

@@ -16,14 +16,17 @@ const data = [
 ];
 
 const Home = () => {
-const {addTask,getTask}= useTask()
+const {addTask,getTask,deleteTask}= useTask()
     const addData = ()=>{
         addTask(schema.dailyTask,{
-            task_detail:"React native"
+            task_detail:"Laravel 11+"
         })
     }
     const getData = ()=>{
         getTask(schema.dailyTask)
+    }
+    const deleteData = ()=>{
+        deleteTask(schema.dailyTask,4)
     }
     return (
 <>
@@ -33,7 +36,9 @@ const {addTask,getTask}= useTask()
             data={data}
             renderItem={({ item }) => <TaskItem title={item.day} key={item.id} />}
         />
-        <Button onPress={addData}>Get tasks</Button>
+        <Button onPress={getData}>Get tasks</Button>
+        <Button onPress={addData}>add tasks</Button>
+        <Button onPress={deleteData}>del tasks</Button>
 </>
 
     )

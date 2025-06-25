@@ -16,40 +16,42 @@ const data = [
 ];
 
 const Home = () => {
-const {addTask,getTask,deleteTask,updateTask,findTask}= useTask()
-    const addData = ()=>{
-        addTask(schema.dailyTask,{
-            task_detail:"Laravel 11+"
+    const { addTask, getTask, deleteTask, updateTask, findTask } = useTask()
+
+    const addData = async() => {
+        const idd = findTask(schema.dailyTask, 6)
+         addTask(schema.day, {
+            daily_task_id: await idd
         })
     }
-    const getData = ()=>{
-        getTask(schema.dailyTask)
+    const getData = () => {
+        getTask(schema.day)
     }
-    const deleteData = ()=>{
-        deleteTask(schema.dailyTask,4)
+    const deleteData = () => {
+        deleteTask(schema.day, 1)
     }
-    const updateData = ()=>{
-        updateTask(schema.dailyTask,{
-            task_detail:"React native."
-        },5)
+    const updateData = () => {
+        updateTask(schema.dailyTask, {
+            task_detail: "React native."
+        }, 5)
     }
-    const findData = ()=>{
-        findTask(schema.dailyTask,6)
+    const findData = () => {
+        findTask(schema.dailyTask, 5)
     }
     return (
-<>
-        <FlatList
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ justifyContent: "space-between" }}
-            data={data}
-            renderItem={({ item }) => <TaskItem title={item.day} key={item.id} />}
-        />
-        <Button onPress={getData}>Get tasks</Button>
-        <Button onPress={findData}>find tasks</Button>
-        <Button onPress={addData}>add tasks</Button>
-        <Button onPress={updateData}>Update tasks</Button>
-        <Button onPress={deleteData}>del tasks</Button>
-</>
+        <>
+            <FlatList
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ justifyContent: "space-between" }}
+                data={data}
+                renderItem={({ item }) => <TaskItem title={item.day} key={item.id} />}
+            />
+            <Button onPress={getData}>Get tasks</Button>
+            <Button onPress={addData}>add tasks</Button>
+            <Button onPress={findData}>find tasks</Button>
+            <Button onPress={deleteData}>del tasks</Button>
+            {/* <Button onPress={updateData}>Update tasks</Button> */}
+        </>
 
     )
 }

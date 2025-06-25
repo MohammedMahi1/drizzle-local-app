@@ -63,10 +63,10 @@ export const Tasks = ({ task, isChecked, id }: TaskItem) => {
 
 const TaskItem = ({ title }: TaskProps) => {
   const [isOpen, setIsOpen] = useState(false)
-    const date = new Date().toLocaleDateString("en-Us",{
-        weekday:'long'
-    })
-    console.log(date);
+    // const date = new Date().toLocaleDateString("en-Us",{
+    //     weekday:'long'
+    // })
+    // // console.log(date);
   return (
     <View className='border-b-2 border-white'>
       <TaskTrigger title={title} onPress={() => setIsOpen(!isOpen)} />

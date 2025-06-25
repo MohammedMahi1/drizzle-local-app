@@ -41,8 +41,9 @@ export function useTask() {
 
     //Get one query hook
     const findTask = async (table: any, id: number) => {
-        const dd =  await drizzleDb.select(table).from(table).where(eq(table.id, id))
-        return console.log(dd[0]);
+        const ddd =  await drizzleDb.select().from(table).where(eq(table.id, id));
+        return ddd[0].id
+        
     };
 
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Pressable, PressableProps, Text, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
+import Checkbox from 'expo-checkbox';
 type TaskProps = {
   title: string
 }
@@ -42,21 +43,21 @@ const TaskTrigger = ({ title, ...rest }: TaskTriggerProps) => {
 
 
 type TaskItem = {
-  id: number;
   task: string;
   isChecked: boolean;
 };
 
-export const Tasks = ({ task, isChecked, id }: TaskItem) => {
+export const Tasks = ({ task, isChecked }: TaskItem) => {
+  const [isCh, setCh] = useState(false);
   return (
-    <View>
-      <Text className='text-white'>{id}</Text>
-      <Text className='text-white'>{task}</Text>
-      <Text className='text-white'>
-        {
-          isChecked ? "checked" : "not checked"
-        }
-      </Text>
+    <View className='px-8 flex flex-row gap-4'>
+      <Checkbox
+        disabled={false}
+        value={isCh}
+        onValueChange={setCh}
+        color={isChecked ? '#4630EB' : undefined}
+      />
+      <Text className='text-white text-xl'>{task}</Text>
     </View>
   )
 }
@@ -64,23 +65,27 @@ export const Tasks = ({ task, isChecked, id }: TaskItem) => {
 
 
 const TaskItem = ({ title }: TaskProps) => {
-  const [isOpen, setIsOpen] = useState(false)
-    // const date = new Date().toLocaleDateString("en-Us",{
-    //     weekday:'long'
-    // })
-    // // console.log(date);
+  const [isOpen, setIsOpen] = useState(true)
+  // const date = new Date().toLocaleDateString("en-Us",{
+  //     weekday:'long'
+  // })
+  // // console.log(date);
   return (
     <View className='border-b-2 border-white'>
+
       <TaskTrigger title={title} onPress={() => setIsOpen(!isOpen)} />
       {
         isOpen &&
+        <View>
         <FlatList
-          showsVerticalScrollIndicator={false}
-          scrollEnabled={false}
-          contentContainerStyle={{ justifyContent: "space-between" }}
-          data={data}
-          renderItem={({ item }) => <Tasks task={item.task} key={item.id} id={item.id} isChecked={item.isChecked} />}
+        className='pb-6'
+        showsVerticalScrollIndicator={false}
+        scrollEnabled={false}
+        contentContainerStyle={{ justifyContent: "space-between" }}
+        data={data}
+        renderItem={({ item }) => <Tasks task={item.task} key={item.id} id={item.id} isChecked={item.isChecked} />}
         />
+      </View>
       }
     </View>
   )

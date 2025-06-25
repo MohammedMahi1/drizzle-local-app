@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Pressable, PressableProps, Text, TextInput, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import Checkbox from 'expo-checkbox';
+import { twMerge } from "tailwind-merge"
+
 type TaskProps = {
   title: string
 }
@@ -57,7 +59,12 @@ export const Tasks = ({ task, isChecked }: TaskItem) => {
         onValueChange={setCh}
         color={isCh ? '#ff6a00' : "#333333"}
       />
-      <Text className={'text-white text-xl'}>{task}</Text>
+      <View>
+        <View className={twMerge('absolute w-full h-1 z-999 top-[50%] left-0',isCh && "bg-primary")} />
+        <Text className={twMerge('text-white text-xl relative', isCh && "line-through")}>
+          {task}
+        </Text>
+      </View>
     </View>
   )
 }
@@ -77,19 +84,19 @@ const TaskItem = ({ title }: TaskProps) => {
       {
         isOpen &&
         <View className='px-8 pb-8'>
-        <FlatList
-        className='pb-6'
-        showsVerticalScrollIndicator={false}
-        scrollEnabled={false}
-        contentContainerStyle={{ justifyContent: "space-between" }}
-        data={data}
-        renderItem={({ item }) => <Tasks task={item.task} key={item.id} isChecked={item.isChecked} />}
-        />
-        <TextInput
-        placeholder='Add a new task...'
-        className='placeholder:text-disable text-xl dark:text-white'
-        />
-      </View>
+          <FlatList
+            className='pb-6'
+            showsVerticalScrollIndicator={false}
+            scrollEnabled={false}
+            contentContainerStyle={{ justifyContent: "space-between" }}
+            data={data}
+            renderItem={({ item }) => <Tasks task={item.task} key={item.id} isChecked={item.isChecked} />}
+          />
+          <TextInput
+            placeholder='Add a new task...'
+            className='placeholder:text-disable text-xl dark:text-white'
+          />
+        </View>
       }
     </View>
   )

@@ -9,7 +9,8 @@ module.exports = {
       white:"#ffffff",
       black:"#000000",
       red:"#ff0000",
-      disable:"#333333"
+      disable:"#333333",
+      primary:"#ff6a00"
     }
   },
   plugins: [],

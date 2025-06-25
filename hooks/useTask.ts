@@ -7,7 +7,7 @@ export function useTask() {
     const db = useSQLiteContext();
 
     const drizzleDb = drizzle(db, { schema });
-    console.log(typeof schema.users);
+
     
     const getTask = async (table:any) => {
         const dd = await drizzleDb.select().from(table);

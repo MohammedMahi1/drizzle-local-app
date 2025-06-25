@@ -16,15 +16,18 @@ const data = [
 ];
 
 const Home = () => {
-
+const {getTask}= useTask()
     
     return (
+<>
         <FlatList
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ justifyContent: "space-between" }}
             data={data}
             renderItem={({ item }) => <TaskItem title={item.day} key={item.id} />}
         />
+        <Button onPress={()=>getTask(schema.day)}>Get tasks</Button>
+</>
 
     )
 }

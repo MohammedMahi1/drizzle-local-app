@@ -64,7 +64,7 @@ export const Tasks = ({ task, isChecked, id }: TaskItem) => {
 const TaskItem = ({ title }: TaskProps) => {
   const [isOpen, setIsOpen] = useState(false)
     const date = new Date().toLocaleDateString("en-Us",{
-        weekday:'short'
+        weekday:'long'
     })
     console.log(date);
   return (

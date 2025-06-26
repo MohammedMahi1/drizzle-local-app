@@ -27,7 +27,8 @@ type InitialType = {
     [day in DayType]: Task[]
 }
 
-const initialState: InitialType = {
+const initialState: InitialType = 
+{ 
   "MONDAY": [],
   "TUESDAY": [],
   "WEDNESDAY": [],
@@ -36,8 +37,6 @@ const initialState: InitialType = {
   "SATURDAY": [],
   "SUNDAY": [],
 }
-
-
 const taskSlice = createSlice({
     name: "task",
     initialState,

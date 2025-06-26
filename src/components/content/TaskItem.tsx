@@ -7,35 +7,19 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/useApp';
 import { openDay } from '../../store/slices/openSlice';
 
 type TaskProps = {
-  title: string
+  title: string,
+  isOpen: boolean
+  setOpen: (title: string) => void,
+  data:{
+    task:string,
+    id:number,
+    
+  }
+
 }
 type TaskTriggerProps = {
   title: string
 } & PressableProps
-
-export const data = [
-  {
-    id: 1,
-    task: "React native",
-    isChecked: false
-  },
-  {
-    id: 2,
-    task: "Laravel 11+",
-    isChecked: false
-  },
-  {
-    id: 3,
-    task: "Next js",
-    isChecked: false
-  },
-  {
-    id: 4,
-    task: "ORM Drizzle",
-    isChecked: false
-  }
-]
-
 
 const TaskTrigger = ({ title, ...rest }: TaskTriggerProps) => {
   return (
@@ -62,7 +46,7 @@ export const Tasks = ({ task, isChecked }: TaskItem) => {
         color={isCh ? '#ff6a00' : "#333333"}
       />
       <View>
-        <View className={twMerge('absolute w-full h-1 z-999 top-[50%] left-0',isCh && "bg-primary")} />
+        <View className={twMerge('absolute w-full h-1 z-999 top-[50%] left-0', isCh && "bg-primary")} />
         <Text className={twMerge('text-white text-xl relative', isCh && "line-through")}>
           {task}
         </Text>
@@ -73,20 +57,22 @@ export const Tasks = ({ task, isChecked }: TaskItem) => {
 
 
 
-const TaskItem = ({ title }: TaskProps) => {
-  const [isOpen, setIsOpen] = useState(true)
+const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
   // const date = new Date().toLocaleDateString("en-Us",{
   //     weekday:'long'
   // })
   // // console.log(date);
-  // const open = useAppDispatch(openDay())
-  const dd = useAppSelector((state)=>state.open) 
+  const dispatch = useAppDispatch()
+  const dd = useAppSelector((state) => state.open.day[title])
+  const openHandler = (e: string) => {
+    setOpen(e)
+  }
   return (
     <View className='border-b-2 border-white'>
 
-      <TaskTrigger title={title} onPress={() => setIsOpen(!isOpen)} />
+      <TaskTrigger title={title} onPress={() => openHandler(title)} />
       {
-        dd &&
+        isOpen &&
         <View className='px-8 pb-8'>
           <FlatList
             className='pb-6'

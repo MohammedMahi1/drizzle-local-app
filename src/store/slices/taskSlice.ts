@@ -34,7 +34,7 @@ const initialState: InitialType = {
   "THURSDAY": [],
   "FRIDAY": [],
   "SATURDAY": [],
-  "SUNDAY": []
+  "SUNDAY": [],
 }
 
 
@@ -42,7 +42,7 @@ const taskSlice = createSlice({
     name: "task",
     initialState,
     reducers: {
-
+      
     },
 })
 

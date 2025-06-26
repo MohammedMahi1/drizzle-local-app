@@ -3,6 +3,8 @@ import { Pressable, PressableProps, Text, TextInput, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import Checkbox from 'expo-checkbox';
 import { twMerge } from "tailwind-merge"
+import { useAppDispatch, useAppSelector } from '../../../hooks/useApp';
+import { openDay } from '../../store/slices/openSlice';
 
 type TaskProps = {
   title: string
@@ -77,12 +79,14 @@ const TaskItem = ({ title }: TaskProps) => {
   //     weekday:'long'
   // })
   // // console.log(date);
+  // const open = useAppDispatch(openDay())
+  const dd = useAppSelector((state)=>state.open) 
   return (
     <View className='border-b-2 border-white'>
 
       <TaskTrigger title={title} onPress={() => setIsOpen(!isOpen)} />
       {
-        isOpen &&
+        dd &&
         <View className='px-8 pb-8'>
           <FlatList
             className='pb-6'

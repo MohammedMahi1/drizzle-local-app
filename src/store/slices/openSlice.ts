@@ -13,14 +13,14 @@ const openSlice = createSlice({
     name: "open",
     initialState,
     reducers: {
-        openModal: (state, action: PayloadAction<string>) => {
+        openDay: (state, action: PayloadAction<string>) => {
             state.day[action.payload] = true;
         },
-        closeModal: (state, action: PayloadAction<string>) => {
+        closeDay: (state, action: PayloadAction<string>) => {
             state.day[action.payload] = false;
         },
     },
 })
 
-
-export default openSlice
+export const {openDay,closeDay} = openSlice.actions
+export default openSlice.reducer

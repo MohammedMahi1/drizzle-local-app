@@ -1,25 +1,25 @@
 import { createSlice, isPlainObject, PayloadAction } from "@reduxjs/toolkit";
 
-type InitialType = {
-    isOpen:boolean,
-    name:string
+interface InitialType {
+  day: {
+    [key: string]: boolean;
+  };
 }
 
-const initialState:InitialType = {
-    isOpen:false,
-    name:""
-}
-
+const initialState: InitialType = {
+  day: {},
+};
 const openSlice = createSlice({
-    name:"open",
+    name: "open",
     initialState,
-    reducers:{
-        openHandler :(state,{payload}:PayloadAction<InitialType>)=>{
-            // if(state.name === payload.name){
-            //     state.isOpen === payload.isOpen
-            // }
-        }
-    }
+    reducers: {
+        openModal: (state, action: PayloadAction<string>) => {
+            state.day[action.payload] = true;
+        },
+        closeModal: (state, action: PayloadAction<string>) => {
+            state.day[action.payload] = false;
+        },
+    },
 })
 
 

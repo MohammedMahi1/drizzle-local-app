@@ -10,11 +10,7 @@ type TaskProps = {
   title: string,
   isOpen: boolean
   setOpen: (title: string) => void,
-  data:{
-    task:string,
-    id:number,
-    
-  }
+  data:any
 
 }
 type TaskTriggerProps = {

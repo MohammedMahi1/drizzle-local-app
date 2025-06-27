@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1750697416676,
-      "tag": "0000_odd_ben_parker",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1750711507249,
-      "tag": "0001_reflective_mercury",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1750805454041,
-      "tag": "0002_good_juggernaut",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "6",
-      "when": 1750815138780,
-      "tag": "0003_ambitious_justin_hammer",
+      "when": 1751063471837,
+      "tag": "0000_tiny_carmella_unuscione",
       "breakpoints": true
     }
   ]

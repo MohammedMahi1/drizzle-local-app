@@ -5,7 +5,8 @@ import Checkbox from 'expo-checkbox';
 import { twMerge } from "tailwind-merge"
 import { useAppDispatch, useAppSelector } from '../../../hooks/useApp';
 import { openDay } from '../../store/slices/openSlice';
-
+import { useTask } from '../../../hooks/useTask';
+import * as schema from "../../../db/schema"
 type TaskProps = {
   title: string,
   isOpen: boolean
@@ -62,6 +63,7 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
   const dd = useAppSelector((state) => state.open.day[title])
   const openHandler = (e: string) => {
     setOpen(e)
+    
   }
   return (
     <View className='border-b-2 border-white'>

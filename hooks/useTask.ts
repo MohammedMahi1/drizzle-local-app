@@ -10,18 +10,21 @@ export function useTask() {
     const drizzleDb = drizzle(db, { schema });
 
     //Get query hook
-    const getTask = async (table: any) => {
-        const dd = await drizzleDb.select().from(table);
+    const getTask = async () => {
+      const dd = await drizzleDb.select().from(schema.todo);
        return dd
     };
 
     //Add query hook
-    const addTask = (table: any, data: object) => {
-        drizzleDb.insert(table).values(data).then(() => {
+    const addTask = (data: object) => {
+        drizzleDb.insert(schema.todo).values({ 
+            day:"monday",
+             task:"Gggggg"
+        }).then(() => {
             console.log("Data added");
         }).catch((err) => {
             console.log(err);
-        });
+        })
     };
 
     //Delete query hook

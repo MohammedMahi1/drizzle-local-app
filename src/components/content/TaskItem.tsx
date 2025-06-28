@@ -7,11 +7,17 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/useApp';
 import { openDay } from '../../store/slices/openSlice';
 import { useTask } from '../../../hooks/useTask';
 import * as schema from "../../../db/schema"
+import { Button } from '../ui/Button';
 type TaskProps = {
   title: string,
   isOpen: boolean
   setOpen: (title: string) => void,
-  data:any
+  data: {
+    id: number,
+    day: string,
+    isChecked: boolean,
+    task: string
+  }[]
 
 }
 type TaskTriggerProps = {
@@ -32,7 +38,7 @@ type TaskItem = {
   isChecked: boolean;
 };
 
-export const Tasks = ({ task, isChecked }: TaskItem) => {
+export const Tasks = ({  task, isChecked }: TaskItem) => {
   const [isCh, setCh] = useState(false);
   return (
     <View className=' flex flex-row gap-4'>
@@ -59,11 +65,17 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
   //     weekday:'long'
   // })
   // // console.log(date);
-  const dispatch = useAppDispatch()
-  const dd = useAppSelector((state) => state.open.day[title])
+
+
   const openHandler = (e: string) => {
     setOpen(e)
-    
+  }
+
+  const hhh = (title: string) => {
+    const hh = data.filter(e => (
+      e.day.toLowerCase() === title.toLowerCase()
+    ))
+    return hh
   }
   return (
     <View className='border-b-2 border-white'>
@@ -72,14 +84,14 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
       {
         isOpen &&
         <View className='px-8 pb-8'>
-          <FlatList
-            className='pb-6'
-            showsVerticalScrollIndicator={false}
-            scrollEnabled={false}
-            contentContainerStyle={{ justifyContent: "space-between" }}
-            data={data}
-            renderItem={({ item }) => <Tasks task={item.task} key={item.id} isChecked={item.isChecked} />}
-          />
+          {
+            data.map((e)=>{
+             const fff = e.day.toLowerCase() === title.toLowerCase();
+             if (fff) {
+              return <Tasks task={e.task} key={e.id} isChecked={e.isChecked} />
+             }
+            })
+          }
           <TextInput
             placeholder='Add a new task...'
             className='placeholder:text-disable text-xl dark:text-white'

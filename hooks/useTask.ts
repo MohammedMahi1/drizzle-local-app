@@ -11,12 +11,11 @@ export function useTask() {
 
     //Get query hook
     const getTask = async () => {
-      const dd = await drizzleDb.select().from(schema.todo);
-       return dd
+      return await drizzleDb.select().from(schema.todo);
     };
 
     //Add query hook
-    const addTask = (data: object) => {
+    const addTask = () => {
         drizzleDb.insert(schema.todo).values({ 
             day:"monday",
              task:"Gggggg"

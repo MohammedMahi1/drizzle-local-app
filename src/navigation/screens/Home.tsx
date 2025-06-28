@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList } from 'react-native'
 import TaskItem from '../../components/content/TaskItem';
 import { useAppSelector } from '../../../hooks/useApp';
@@ -7,9 +7,22 @@ import { Button } from '../../components/ui/Button';
 
 const Home = () => {
     const task = useAppSelector((state) => state.task)
-    const { addTask,getTask } = useTask()
-    const getData = ()=>{
-        
+    const { addTask, getTask } = useTask()
+
+    const [get, setGet] = useState<Array<object>>()
+    useEffect(() => {
+        (async () => {
+            const get = await getTask()
+            setGet(get)
+        })()
+    }, [])
+    const getData = async () => {
+        const get = await getTask()
+        console.log(get);
+    }
+    const addData = () => {
+        const get = addTask()
+        console.log(get);
     }
     const convertedData = Object.keys(task).map((e) => (
         {
@@ -34,12 +47,17 @@ const Home = () => {
                 contentContainerStyle={{ justifyContent: "space-between" }}
                 data={data}
                 renderItem={({ item }) =>
-                    <TaskItem title={item.title} key={item.title} isOpen={item.isOpen} data={item.data}
+                    <TaskItem
+                        title={item.title}
+                        key={item.title}
+                        isOpen={item.isOpen}
+                        data={get}
                         setOpen={setOpen}
                     />
                 }
             />
-            <Button onPress={getTask}>obbijb</Button>
+            <Button onPress={addData}>add</Button>
+            <Button onPress={getData}>obbijb</Button>
         </>
     )
 }

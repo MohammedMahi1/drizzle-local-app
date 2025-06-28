@@ -7,7 +7,7 @@ import { Button } from '../../components/ui/Button';
 
 const Home = () => {
     const task = useAppSelector((state) => state.task)
-    const { addTask, getTask } = useTask()
+    const {  getTask } = useTask()
 
     const [get, setGet] = useState<{}[] | undefined | any>()
     useEffect(() => {
@@ -15,11 +15,7 @@ const Home = () => {
             const get = await getTask()
             setGet(get)
         })()
-    }, [])
-    const addData = () => {
-        const get = addTask()
-        console.log(get);
-    }
+    }, [setGet,get])
     const convertedData = Object.keys(task).map((e) => (
         {
             title: e,
@@ -45,7 +41,6 @@ const Home = () => {
                 data={data}
                 renderItem={({ item }) =>
                     <TaskItem
-
                         title={item.title}
                         key={item.title}
                         isOpen={item.isOpen}

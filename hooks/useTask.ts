@@ -15,20 +15,17 @@ export function useTask() {
     };
 
     //Add query hook
-    const addTask = () => {
-        drizzleDb.insert(schema.todo).values({ 
-            day:"monday",
-             task:"Gggggg"
-        }).then(() => {
-            console.log("Data added");
+    const addTask = (data:schema.Todo) => {
+        drizzleDb.insert(schema.todo).values(data).then(() => {
+           
         }).catch((err) => {
             console.log(err);
         })
-    };
+    }
 
     //Delete query hook
-    const deleteTask = async (table: any, id: number) => {
-        return await drizzleDb.delete(table).where(eq(table.id, id)).then((e) => console.log("deleted user : " + id));
+    const deleteTask = async ( id: number) => {
+        return await drizzleDb.delete(schema.todo).where(eq(schema.todo.id, id)).then((e) => console.log("deleted user : " + id));
     };
 
     //Update query hook

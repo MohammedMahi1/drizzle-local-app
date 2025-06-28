@@ -36,10 +36,12 @@ const TaskTrigger = ({ title, ...rest }: TaskTriggerProps) => {
 type TaskItem = {
   task: string;
   isChecked: boolean;
+  id:number
 };
 
-export const Tasks = ({  task, isChecked }: TaskItem) => {
+export const Tasks = ({ task,id, isChecked }: TaskItem) => {
   const [isCh, setCh] = useState(false);
+  const {deleteTask} = useTask()
   return (
     <View className=' flex flex-row gap-4 pb-8 items-center justify-start'>
       <Checkbox
@@ -47,16 +49,18 @@ export const Tasks = ({  task, isChecked }: TaskItem) => {
         value={isCh}
         onValueChange={setCh}
         style={{
-          width:26,
-          height:26
+          width: 26,
+          height: 26
         }}
         color={isCh ? '#ff6a00' : "#333333"}
       />
+            <Button onPress={()=>deleteTask(id)}>delete</Button>
+
       <View>
-        <View className={twMerge('absolute w-full h-1 !z-999 top-[50%] left-0', isCh && "bg-red")} />
         <Text className={twMerge('text-white text-2xl relative z-0')}>
           {task}
         </Text>
+        <View className={twMerge('absolute w-full h-1 !z-999 top-[50%] left-0', isCh && "bg-primary")} />
       </View>
     </View>
   )
@@ -65,21 +69,13 @@ export const Tasks = ({  task, isChecked }: TaskItem) => {
 
 
 const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
-  // const date = new Date().toLocaleDateString("en-Us",{
-  //     weekday:'long'
-  // })
-  // // console.log(date);
-
-
+  const [put, setPut] = useState("")
+  const { addTask,getTask,deleteTask } = useTask()
   const openHandler = (e: string) => {
     setOpen(e)
   }
-
-  const hhh = (title: string) => {
-    const hh = data.filter(e => (
-      e.day.toLowerCase() === title.toLowerCase()
-    ))
-    return hh
+  const addData = (data: schema.Todo) => {
+    addTask(data)
   }
   return (
     <View className='border-b-2 border-white'>
@@ -89,16 +85,28 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
         isOpen &&
         <View className='px-8 pb-8'>
           <View className='flex flex-col'>
-          {
-            data.map((e)=>{
-              const fff = e.day.toLowerCase() === title.toLowerCase();
-              if (fff) {
-                return <Tasks task={e.task} key={e.id} isChecked={e.isChecked} />
-              }
-            })
-          }
+            {
+              data.map((e) => {
+                const fff = e.day.toLowerCase() === title.toLowerCase();
+                if (fff) {
+                  return <Tasks task={e.task} key={e.id} id={e.id}isChecked={e.isChecked} />
+                }
+              })
+            }
           </View>
           <TextInput
+            onChange={(e) => setPut(e.nativeEvent.text)}
+            returnKeyType='done'
+            onSubmitEditing={(e) => {
+              addData(
+                {
+                  day: title,
+                  task: put,
+                }
+              )
+              console.log(e);
+              
+            }}
             placeholder='Add a new task...'
             className='placeholder:text-disable text-xl dark:text-white'
           />

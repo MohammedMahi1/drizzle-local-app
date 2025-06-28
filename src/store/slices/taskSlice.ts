@@ -1,34 +1,31 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { drizzle } from "drizzle-orm/singlestore";
-import { useSQLiteContext } from "expo-sqlite";
-import * as schema from "../../../db/schema"
 
 
 
 
 //Reducers
 type Task = {
-    task: string,
-    id: number,
-    isChecked: boolean
+  task: string,
+  id: number,
+  isChecked: boolean
 }
 
-type DayType = 
-  "MONDAY" | 
-  "TUESDAY" | 
-  "WEDNESDAY" | 
-  "THURSDAY" | 
-  "FRIDAY" | 
-  "SATURDAY" | 
+type DayType =
+  "MONDAY" |
+  "TUESDAY" |
+  "WEDNESDAY" |
+  "THURSDAY" |
+  "FRIDAY" |
+  "SATURDAY" |
   "SUNDAY";
 
 
 type InitialType = {
-    [day in DayType]: Task[]
+  [day in DayType]: Task[]
 }
 
-const initialState: InitialType = 
-{ 
+const initialState: InitialType =
+{
   "MONDAY": [],
   "TUESDAY": [],
   "WEDNESDAY": [],
@@ -38,12 +35,11 @@ const initialState: InitialType =
   "SUNDAY": [],
 }
 const taskSlice = createSlice({
-    name: "task",
-    initialState,
-    reducers: {
-      
-    },
+  name: "task",
+  initialState,
+  reducers: {},
 })
+
 
 export default taskSlice.reducer
 

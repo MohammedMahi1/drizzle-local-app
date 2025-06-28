@@ -41,16 +41,20 @@ type TaskItem = {
 export const Tasks = ({  task, isChecked }: TaskItem) => {
   const [isCh, setCh] = useState(false);
   return (
-    <View className=' flex flex-row gap-4'>
+    <View className=' flex flex-row gap-4 pb-8 items-center justify-start'>
       <Checkbox
         disabled={false}
         value={isCh}
         onValueChange={setCh}
+        style={{
+          width:26,
+          height:26
+        }}
         color={isCh ? '#ff6a00' : "#333333"}
       />
       <View>
-        <View className={twMerge('absolute w-full h-1 z-999 top-[50%] left-0', isCh && "bg-primary")} />
-        <Text className={twMerge('text-white text-xl relative', isCh && "line-through")}>
+        <View className={twMerge('absolute w-full h-1 !z-999 top-[50%] left-0', isCh && "bg-red")} />
+        <Text className={twMerge('text-white text-2xl relative z-0')}>
           {task}
         </Text>
       </View>
@@ -84,14 +88,16 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
       {
         isOpen &&
         <View className='px-8 pb-8'>
+          <View className='flex flex-col'>
           {
             data.map((e)=>{
-             const fff = e.day.toLowerCase() === title.toLowerCase();
-             if (fff) {
-              return <Tasks task={e.task} key={e.id} isChecked={e.isChecked} />
-             }
+              const fff = e.day.toLowerCase() === title.toLowerCase();
+              if (fff) {
+                return <Tasks task={e.task} key={e.id} isChecked={e.isChecked} />
+              }
             })
           }
+          </View>
           <TextInput
             placeholder='Add a new task...'
             className='placeholder:text-disable text-xl dark:text-white'

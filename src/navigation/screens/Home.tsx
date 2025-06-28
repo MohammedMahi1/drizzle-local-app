@@ -9,17 +9,13 @@ const Home = () => {
     const task = useAppSelector((state) => state.task)
     const { addTask, getTask } = useTask()
 
-    const [get, setGet] = useState<Array<object>>()
+    const [get, setGet] = useState<{}[] | undefined | any>()
     useEffect(() => {
         (async () => {
             const get = await getTask()
             setGet(get)
         })()
     }, [])
-    const getData = async () => {
-        const get = await getTask()
-        console.log(get);
-    }
     const addData = () => {
         const get = addTask()
         console.log(get);
@@ -43,11 +39,13 @@ const Home = () => {
     return (
         <>
             <FlatList
+                className='pt-8'
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ justifyContent: "space-between" }}
                 data={data}
                 renderItem={({ item }) =>
                     <TaskItem
+
                         title={item.title}
                         key={item.title}
                         isOpen={item.isOpen}
@@ -56,8 +54,6 @@ const Home = () => {
                     />
                 }
             />
-            <Button onPress={addData}>add</Button>
-            <Button onPress={getData}>obbijb</Button>
         </>
     )
 }

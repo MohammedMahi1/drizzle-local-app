@@ -36,12 +36,12 @@ const TaskTrigger = ({ title, ...rest }: TaskTriggerProps) => {
 type TaskItem = {
   task: string;
   isChecked: boolean;
-  id:number
+  id: number
 };
 
-export const Tasks = ({ task,id, isChecked }: TaskItem) => {
+export const Tasks = ({ task, id, isChecked }: TaskItem) => {
   const [isCh, setCh] = useState(false);
-  const {deleteTask} = useTask()
+  const { deleteTask } = useTask()
   return (
     <View className=' flex flex-row gap-4 pb-8 items-center justify-start'>
       <Checkbox
@@ -54,7 +54,7 @@ export const Tasks = ({ task,id, isChecked }: TaskItem) => {
         }}
         color={isCh ? '#ff6a00' : "#333333"}
       />
-            <Button onPress={()=>deleteTask(id)}>delete</Button>
+      <Button onPress={() => deleteTask(id)}>delete</Button>
 
       <View>
         <Text className={twMerge('text-white text-2xl relative z-0')}>
@@ -70,12 +70,16 @@ export const Tasks = ({ task,id, isChecked }: TaskItem) => {
 
 const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
   const [put, setPut] = useState("")
-  const { addTask,getTask,deleteTask } = useTask()
+  const { addTask, getTask, deleteTask } = useTask()
   const openHandler = (e: string) => {
     setOpen(e)
   }
   const addData = (data: schema.Todo) => {
-    addTask(data)
+    if (!data || data === null || data === undefined || data.task === "") {
+      console.log("enter your data")
+    } else {
+      addTask(data)
+    }
   }
   return (
     <View className='border-b-2 border-white'>
@@ -89,7 +93,7 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
               data.map((e) => {
                 const fff = e.day.toLowerCase() === title.toLowerCase();
                 if (fff) {
-                  return <Tasks task={e.task} key={e.id} id={e.id}isChecked={e.isChecked} />
+                  return <Tasks task={e.task} key={e.id} id={e.id} isChecked={e.isChecked} />
                 }
               })
             }
@@ -97,15 +101,14 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
           <TextInput
             onChange={(e) => setPut(e.nativeEvent.text)}
             returnKeyType='done'
-            onSubmitEditing={(e) => {
+            onSubmitEditing={() => {
               addData(
                 {
                   day: title,
                   task: put,
                 }
               )
-              console.log(e);
-              
+
             }}
             placeholder='Add a new task...'
             className='placeholder:text-disable text-xl dark:text-white'

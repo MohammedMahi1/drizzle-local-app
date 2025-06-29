@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Pressable, PressableProps, Text, TextInput, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import Checkbox from 'expo-checkbox';
@@ -70,6 +70,7 @@ export const Tasks = ({ task, id, isChecked }: TaskItem) => {
 
 const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
   const [put, setPut] = useState("")
+  const refPut = useRef<TextInput>(null)
   const { addTask, getTask, deleteTask } = useTask()
   const openHandler = (e: string) => {
     setOpen(e)
@@ -99,7 +100,11 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
             }
           </View>
           <TextInput
-            onChange={(e) => setPut(e.nativeEvent.text)}
+            ref={refPut}
+            onChange={
+              (e) => setPut(e.nativeEvent.text)
+            }
+            value={put}
             returnKeyType='done'
             onSubmitEditing={() => {
               addData(
@@ -107,9 +112,9 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
                   day: title,
                   task: put,
                 }
-              )
-
+              );
             }}
+            submitBehavior='submit'
             placeholder='Add a new task...'
             className='placeholder:text-disable text-xl dark:text-white'
           />

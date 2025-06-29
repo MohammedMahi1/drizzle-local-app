@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList } from 'react-native'
+import { FlatList, SectionList } from 'react-native'
 import TaskItem from '../../components/content/TaskItem';
 import { useAppSelector } from '../../../hooks/useApp';
 import { useTask } from '../../../hooks/useTask';
@@ -7,7 +7,7 @@ import { Button } from '../../components/ui/Button';
 
 const Home = () => {
     const task = useAppSelector((state) => state.task)
-    const {  getTask } = useTask()
+    const { getTask } = useTask()
 
     const [get, setGet] = useState<{}[] | undefined | any>()
     useEffect(() => {
@@ -15,7 +15,7 @@ const Home = () => {
             const get = await getTask()
             setGet(get)
         })()
-    }, [setGet,get])
+    }, [setGet, get])
     const convertedData = Object.keys(task).map((e) => (
         {
             title: e,
@@ -32,10 +32,23 @@ const Home = () => {
                 }
             )))
     }
+
+
     return (
         <>
+            {/* <SectionList
+                sections={task}
+                keyExtractor={(item, index) => item + index}
+                renderItem={({ item }) => (
+                    <View style={styles.item}>
+                        <Text style={styles.title}>{item}</Text>
+                    </View>
+                )}
+                renderSectionHeader={({ section: { title } }) => (
+                    <Text style={styles.header}>{title}</Text>
+                )}
+            /> */}
             <FlatList
-                ListHeaderComponent={}
                 className='pt-8'
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ justifyContent: "space-between" }}

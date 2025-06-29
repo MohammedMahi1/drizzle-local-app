@@ -35,6 +35,7 @@ const Home = () => {
     return (
         <>
             <FlatList
+                ListHeaderComponent={}
                 className='pt-8'
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ justifyContent: "space-between" }}

@@ -15,8 +15,8 @@ export function useTask() {
     };
 
     //Add query hook
-    const addTask = (data:schema.Todo) => {
-        drizzleDb.insert(schema.todo).values(data).then(() => {
+    const addTask = async(data:schema.Todo) => {
+       await drizzleDb.insert(schema.todo).values(data).then(() => {
             console.log("data added");
         }).catch((err) => {
             console.log(err);

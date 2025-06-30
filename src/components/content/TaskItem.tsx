@@ -42,6 +42,7 @@ type TaskItem = {
 export const Tasks = ({ task, id, isChecked }: TaskItem) => {
   const [isCh, setCh] = useState(false);
   const { deleteTask } = useTask()
+  const [lonp, setLonp] = useState(false)
   return (
     <View className=' flex flex-row gap-4 pb-8 items-center justify-start'>
       <Checkbox
@@ -54,14 +55,29 @@ export const Tasks = ({ task, id, isChecked }: TaskItem) => {
         }}
         color={isCh ? '#ff6a00' : "#333333"}
       />
-      <Button onPress={() => deleteTask(id)}>delete</Button>
 
-      <View>
-        <Text className={twMerge('text-white text-2xl relative z-0')}>
-          {task}
-        </Text>
-        <View className={twMerge('absolute w-full h-1 !z-999 top-[50%] left-0', isCh && "bg-primary")} />
-      </View>
+      <Pressable
+        onLongPress={() => { console.log("pressed") }}
+        className='fex flex-row justify-between min-w-fit items-center gap-5'
+      >
+        <View>
+
+          <Text className={twMerge('text-white text-2xl relative z-0')}
+            onLongPress={() => { setLonp(true)}}
+          >
+            {task}
+          </Text>
+          <View className={twMerge('absolute w-full h-1 !z-999 top-[50%] left-0', isCh && "bg-primary")} />
+        </View>
+        {
+          lonp &&
+          <Pressable className=' bg-primary rounded-full w-6 h-6 flex items-center justify-center'
+          onPress={()=>deleteTask(id)}
+          >
+            <Text className='text-white'>X</Text>
+          </Pressable>
+        }
+      </Pressable>
     </View>
   )
 }
@@ -79,12 +95,14 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
     if (!data || data === null || data === undefined || data.task === "") {
       console.log("enter your data")
     } else {
-      addTask(data)
+      addTask(data).then(() => {
+        refPut.current?.clear()
+        setPut("")
+      })
     }
   }
   return (
     <View className='border-b-2 border-white'>
-
       <TaskTrigger title={title} onPress={() => openHandler(title)} />
       {
         isOpen &&

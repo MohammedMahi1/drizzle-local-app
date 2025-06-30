@@ -61,8 +61,6 @@ export const Tasks = ({ task, id, isChecked, day }: TaskItem) => {
             task: putVal,
             is_checked:e
           },id)
-          console.log(isChecked);
-          
         }}
         // onChange={(e)=>console.log(e.nativeEvent.target)}
         style={{

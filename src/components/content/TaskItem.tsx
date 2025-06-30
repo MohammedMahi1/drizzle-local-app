@@ -37,18 +37,19 @@ type TaskItem = {
   task: string;
   isChecked: boolean;
   id: number,
-  day: string
+  day: string,
 };
 
 export const Tasks = ({ task, id, isChecked, day }: TaskItem) => {
   const [isCh, setCh] = useState(false);
   const { deleteTask, updateTask } = useTask()
-  const [lonp, setLonp] = useState(false)
   const [putVal, setPutVal] = useState(task)
   const putRef = useRef(null)
+  const [longP,setLongP] = useState(false)
   return (
     <View className=' flex flex-row gap-4 pb-8 items-center justify-start'>
       <Checkbox
+      
         disabled={false}
         value={isCh}
         onValueChange={setCh}
@@ -59,21 +60,20 @@ export const Tasks = ({ task, id, isChecked, day }: TaskItem) => {
         color={isCh ? '#ff6a00' : "#333333"}
       />
 
-      <Pressable
-        onLongPress={() => { console.log("pressed") }}
+      <View
         className='fex flex-row justify-between min-w-fit items-center gap-5'
       >
         <View>
-          <Pressable
-            onLongPress={() => { setLonp(true) }}
-          >
             <TextInput
               ref={putRef}
+              onBlur={()=>putVal === "" && setPutVal(task)}
               value={putVal}
+              selectionColor={"#ff6a00"}
+              selectTextOnFocus={false}
               onChange={(e) => setPutVal(e.nativeEvent.text)}
               onSubmitEditing={() => {
                 putVal === "" ?
-                  console.log("noononon")
+                setPutVal(task)
                   :
                   updateTask({
                     day: day,
@@ -82,18 +82,18 @@ export const Tasks = ({ task, id, isChecked, day }: TaskItem) => {
               }}
               className={twMerge('text-white text-2xl relative z-0')}
             />
-          </Pressable>
           <View className={twMerge('absolute w-full h-1 !z-999 top-[50%] left-0', isCh && "bg-primary")} />
         </View>
         {
-          lonp &&
+          longP &&
           <Pressable className=' bg-red rounded-full w-6 h-6 flex items-center justify-center'
             onPress={() => deleteTask(id)}
           >
             <Text className='text-white'>X</Text>
           </Pressable>
+
         }
-      </Pressable>
+      </View>
     </View>
   )
 }
@@ -117,9 +117,13 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
       })
     }
   }
+
   return (
     <View className='border-b-2 border-disable'>
-      <TaskTrigger title={title} onPress={() => openHandler(title)} />
+      <TaskTrigger 
+      title={title} onPress={() =>{
+         openHandler(title)
+      }} />
       {
         isOpen &&
         <View className='px-8 pb-8'>
@@ -128,7 +132,7 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
               data.map((e) => {
                 const fff = e.day.toLowerCase() === title.toLowerCase();
                 if (fff) {
-                  return <Tasks task={e.task} key={e.id} id={e.id} isChecked={e.isChecked} day={e.day} />
+                  return <Tasks task={e.task} key={e.id} id={e.id} isChecked={e.isChecked} day={e.day}/>
                 }
               })
             }

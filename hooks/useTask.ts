@@ -29,10 +29,10 @@ export function useTask() {
     };
 
     //Update query hook
-    const updateTask = async (table: any, data: object,id:number) => {
-        return await drizzleDb.update(table)
+    const updateTask = async ( data:schema.Todo,id:number) => {
+        return await drizzleDb.update(schema.todo)
             .set(data)
-            .where(eq(table.id, id)).then((e)=>{
+            .where(eq(schema.todo.id, id)).then((e)=>{
                 console.log("Task updated");
             });
     };

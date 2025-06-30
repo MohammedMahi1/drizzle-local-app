@@ -36,13 +36,16 @@ const TaskTrigger = ({ title, ...rest }: TaskTriggerProps) => {
 type TaskItem = {
   task: string;
   isChecked: boolean;
-  id: number
+  id: number,
+  day: string
 };
 
-export const Tasks = ({ task, id, isChecked }: TaskItem) => {
+export const Tasks = ({ task, id, isChecked, day }: TaskItem) => {
   const [isCh, setCh] = useState(false);
-  const { deleteTask } = useTask()
+  const { deleteTask, updateTask } = useTask()
   const [lonp, setLonp] = useState(false)
+  const [putVal, setPutVal] = useState(task)
+  const putRef = useRef(null)
   return (
     <View className=' flex flex-row gap-4 pb-8 items-center justify-start'>
       <Checkbox
@@ -61,18 +64,31 @@ export const Tasks = ({ task, id, isChecked }: TaskItem) => {
         className='fex flex-row justify-between min-w-fit items-center gap-5'
       >
         <View>
-
-          <Text className={twMerge('text-white text-2xl relative z-0')}
-            onLongPress={() => { setLonp(true)}}
+          <Pressable
+            onLongPress={() => { setLonp(true) }}
           >
-            {task}
-          </Text>
+            <TextInput
+              ref={putRef}
+              value={putVal}
+              onChange={(e) => setPutVal(e.nativeEvent.text)}
+              onSubmitEditing={() => {
+                putVal === "" ?
+                  console.log("noononon")
+                  :
+                  updateTask({
+                    day: day,
+                    task: putVal
+                  }, id)
+              }}
+              className={twMerge('text-white text-2xl relative z-0')}
+            />
+          </Pressable>
           <View className={twMerge('absolute w-full h-1 !z-999 top-[50%] left-0', isCh && "bg-primary")} />
         </View>
         {
           lonp &&
-          <Pressable className=' bg-primary rounded-full w-6 h-6 flex items-center justify-center'
-          onPress={()=>deleteTask(id)}
+          <Pressable className=' bg-red rounded-full w-6 h-6 flex items-center justify-center'
+            onPress={() => deleteTask(id)}
           >
             <Text className='text-white'>X</Text>
           </Pressable>
@@ -102,7 +118,7 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
     }
   }
   return (
-    <View className='border-b-2 border-white'>
+    <View className='border-b-2 border-disable'>
       <TaskTrigger title={title} onPress={() => openHandler(title)} />
       {
         isOpen &&
@@ -112,7 +128,7 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
               data.map((e) => {
                 const fff = e.day.toLowerCase() === title.toLowerCase();
                 if (fff) {
-                  return <Tasks task={e.task} key={e.id} id={e.id} isChecked={e.isChecked} />
+                  return <Tasks task={e.task} key={e.id} id={e.id} isChecked={e.isChecked} day={e.day} />
                 }
               })
             }

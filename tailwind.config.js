@@ -10,7 +10,7 @@ module.exports = {
       black:"#000000",
       red:"#ff0000",
       disable:"#333333",
-      placeholder:"#444444",
+      placeholder:"#8c8c8c",
       primary:"#ff6a00",
     }
   },

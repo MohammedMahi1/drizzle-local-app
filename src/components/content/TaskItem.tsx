@@ -16,7 +16,7 @@ type TaskProps = {
   data: {
     id: number,
     day: string,
-    isChecked: boolean,
+    is_checked: boolean,
     task: string
   }[]
 
@@ -42,52 +42,63 @@ type TaskItem = {
 };
 
 export const Tasks = ({ task, id, isChecked, day }: TaskItem) => {
-  const [isCh, setCh] = useState(false);
+  const [isCh, setCh] = useState(isChecked);
   const { deleteTask, updateTask } = useTask()
   const dark = useColorScheme()
   const [putVal, setPutVal] = useState(task)
   const putRef = useRef(null)
-  const [longP,setLongP] = useState(false)
+  const [longP, setLongP] = useState(false)
+
   return (
     <View className=' flex flex-row gap-4 pb-8 items-center justify-start'>
       <Checkbox
         disabled={false}
         value={isCh}
-        onValueChange={setCh}
+        onValueChange={(e) => {
+          setCh(!isCh)
+          updateTask({
+            day: day,
+            task: putVal,
+            is_checked:e
+          },id)
+          console.log(isChecked);
+          
+        }}
+        // onChange={(e)=>console.log(e.nativeEvent.target)}
         style={{
           width: 26,
           height: 26
         }}
-        color={isCh ? '#ff6a00' : "#333333"}
+        color={isCh ? '#ff6a00' : "#8c8c8c"}
       />
 
       <View
         className='fex flex-row justify-between min-w-fit items-center w-full pr-8'
       >
         <View>
-            <TextInput
-          
-              ref={putRef}
-              onBlur={()=>putVal === "" && setPutVal(task)}
-              value={putVal}
-              selectionColor={"#ff6a00"}
-              selectTextOnFocus={false}
-              onChange={(e) => setPutVal(e.nativeEvent.text)}
-              onSubmitEditing={() => {
-                putVal === "" ?
+          <TextInput
+
+            ref={putRef}
+            onBlur={() => putVal === "" && setPutVal(task)}
+            value={putVal}
+            selectionColor={"#ff6a00"}
+            selectTextOnFocus={false}
+            onChange={(e) => setPutVal(e.nativeEvent.text)}
+            onSubmitEditing={() => {
+              putVal === "" ?
                 setPutVal(task)
-                  :
-                  updateTask({
-                    day: day,
-                    task: putVal
-                  }, id)
-              }}
-              className={twMerge('dark:text-white text-disable text-2xl relative z-0')}
-            />
+                :
+                updateTask({
+                  day: day,
+                  task: putVal,
+                }, id)
+            }}
+            className={twMerge('dark:text-white text-disable text-2xl relative z-0')}
+          />
           <View className={twMerge('absolute w-full h-1 !z-999 top-[50%] left-0', isCh && "bg-primary")} />
-        
+
         </View>
-        <MaterialIcons onPress={()=>deleteTask(id)} name="delete-outline" size={24} color={dark === "dark" ? "white":"black"} />
+        <MaterialIcons onPress={() => deleteTask(id)} name="delete-outline" size={24} color={dark === "dark" ? "white" : "black"} />
       </View>
     </View>
   )
@@ -115,10 +126,10 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
 
   return (
     <View className='border-b-2 border-disable'>
-      <TaskTrigger 
-      title={title} onPress={() =>{
-         openHandler(title)
-      }} />
+      <TaskTrigger
+        title={title} onPress={() => {
+          openHandler(title)
+        }} />
       {
         isOpen &&
         <View className='px-8 pb-8'>
@@ -127,7 +138,7 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
               data.map((e) => {
                 const fff = e.day.toLowerCase() === title.toLowerCase();
                 if (fff) {
-                  return <Tasks task={e.task} key={e.id} id={e.id} isChecked={e.isChecked} day={e.day}/>
+                  return <Tasks task={e.task} key={e.id} id={e.id} isChecked={e.is_checked} day={e.day} />
                 }
               })
             }
@@ -149,7 +160,7 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
             }}
             submitBehavior='submit'
             placeholder='Add a new task...'
-            className='placeholder:text-disable text-xl dark:text-white'
+            className='placeholder:text-placeholder text-xl dark:text-white'
           />
         </View>
       }

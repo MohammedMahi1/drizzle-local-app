@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, SectionList } from 'react-native'
+import { FlatList, KeyboardAvoidingView, SectionList } from 'react-native'
 import TaskItem from '../../components/content/TaskItem';
 import { useAppSelector } from '../../../hooks/useApp';
 import { useTask } from '../../../hooks/useTask';
@@ -36,18 +36,7 @@ const Home = () => {
 
     return (
         <>
-            {/* <SectionList
-                sections={task}
-                keyExtractor={(item, index) => item + index}
-                renderItem={({ item }) => (
-                    <View style={styles.item}>
-                        <Text style={styles.title}>{item}</Text>
-                    </View>
-                )}
-                renderSectionHeader={({ section: { title } }) => (
-                    <Text style={styles.header}>{title}</Text>
-                )}
-            /> */}
+        <KeyboardAvoidingView behavior='padding'>
             <FlatList
                 className='pt-8'
                 showsVerticalScrollIndicator={false}
@@ -55,14 +44,15 @@ const Home = () => {
                 data={data}
                 renderItem={({ item }) =>
                     <TaskItem
-                        title={item.title}
-                        key={item.title}
-                        isOpen={item.isOpen}
-                        data={get}
-                        setOpen={setOpen}
-                    />
-                }
+                title={item.title}
+                key={item.title}
+                isOpen={item.isOpen}
+                data={get}
+                setOpen={setOpen}
+                />
+            }
             />
+            </KeyboardAvoidingView>
         </>
     )
 }

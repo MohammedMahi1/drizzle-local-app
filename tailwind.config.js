@@ -14,6 +14,9 @@ module.exports = {
       disable:"#a6a6a6",
       placeholder:"#8c8c8c",
       primary:"#ff6a00",
+    },
+    fontFamily:{
+      rubik:"Libertinus Math",
     }
   },
   plugins: [],

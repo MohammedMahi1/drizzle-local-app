@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Pressable, PressableProps, Text, TextInput, useColorScheme, View } from 'react-native'
+import { KeyboardAvoidingView, Platform, Pressable, PressableProps, Text, TextInput, useColorScheme, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import Checkbox from 'expo-checkbox';
 import { twMerge } from "tailwind-merge"
@@ -59,8 +59,8 @@ export const Tasks = ({ task, id, isChecked, day }: TaskItem) => {
           updateTask({
             day: day,
             task: putVal,
-            is_checked:e
-          },id)
+            is_checked: e
+          }, id)
         }}
         // onChange={(e)=>console.log(e.nativeEvent.target)}
         style={{
@@ -123,44 +123,45 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
   }
 
   return (
-    <View className='border-b-2 dark:border-disableDark border-disable'>
+    <View className=' border-b-2 dark:border-disableDark border-disable'>
       <TaskTrigger
         title={title} onPress={() => {
           openHandler(title)
         }} />
       {
         isOpen &&
-        <View className='px-8 pb-8'>
-          <View className='flex flex-col'>
-            {
-              data.map((e) => {
-                const fff = e.day.toLowerCase() === title.toLowerCase();
-                if (fff) {
-                  return <Tasks task={e.task} key={e.id} id={e.id} isChecked={e.is_checked} day={e.day} />
-                }
-              })
-            }
+
+          <View className='px-8 pb-8'>
+            <View className='flex flex-col'>
+              {
+                data.map((e) => {
+                  const fff = e.day.toLowerCase() === title.toLowerCase();
+                  if (fff) {
+                    return <Tasks task={e.task} key={e.id} id={e.id} isChecked={e.is_checked} day={e.day} />
+                  }
+                })
+              }
+            </View>
+            <TextInput
+              ref={refPut}
+              onChange={
+                (e) => setPut(e.nativeEvent.text)
+              }
+              value={put}
+              returnKeyType='done'
+              onSubmitEditing={() => {
+                addData(
+                  {
+                    day: title,
+                    task: put,
+                  }
+                );
+              }}
+              submitBehavior='submit'
+              placeholder='Add a new task...'
+              className='font-rubik placeholder:text-placeholder text-xl dark:text-white'
+            />
           </View>
-          <TextInput
-            ref={refPut}
-            onChange={
-              (e) => setPut(e.nativeEvent.text)
-            }
-            value={put}
-            returnKeyType='done'
-            onSubmitEditing={() => {
-              addData(
-                {
-                  day: title,
-                  task: put,
-                }
-              );
-            }}
-            submitBehavior='submit'
-            placeholder='Add a new task...'
-            className='placeholder:text-placeholder text-xl dark:text-white'
-          />
-        </View>
       }
     </View>
   )

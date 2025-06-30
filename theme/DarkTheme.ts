@@ -7,7 +7,7 @@ export const DarkTheme : Theme= {
   dark: true,
   colors: {
     primary: 'rgb(255, 115, 0)',
-    background: 'rgb(22, 22, 22)',
+    background: '#2b2b2b',
     card: 'rgb(255, 255, 255)',
     text: 'rgb(28, 28, 30)',
     border: 'rgb(199, 199, 204)',

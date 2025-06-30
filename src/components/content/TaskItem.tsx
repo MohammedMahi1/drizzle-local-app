@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Pressable, PressableProps, Text, TextInput, View } from 'react-native'
+import { Pressable, PressableProps, Text, TextInput, useColorScheme, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import Checkbox from 'expo-checkbox';
 import { twMerge } from "tailwind-merge"
@@ -7,7 +7,8 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/useApp';
 import { openDay } from '../../store/slices/openSlice';
 import { useTask } from '../../../hooks/useTask';
 import * as schema from "../../../db/schema"
-import { Button } from '../ui/Button';
+import { MdDeleteOutline } from "react-icons/md";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 type TaskProps = {
   title: string,
   isOpen: boolean
@@ -27,7 +28,7 @@ type TaskTriggerProps = {
 const TaskTrigger = ({ title, ...rest }: TaskTriggerProps) => {
   return (
     <Pressable className='px-8 py-16' {...rest}>
-      <Text className='text-white text-6xl font-semibold'>{title}</Text>
+      <Text className='text-disable dark:text-white text-6xl font-semibold'>{title}</Text>
     </Pressable>
   )
 }
@@ -43,13 +44,13 @@ type TaskItem = {
 export const Tasks = ({ task, id, isChecked, day }: TaskItem) => {
   const [isCh, setCh] = useState(false);
   const { deleteTask, updateTask } = useTask()
+  const dark = useColorScheme()
   const [putVal, setPutVal] = useState(task)
   const putRef = useRef(null)
   const [longP,setLongP] = useState(false)
   return (
     <View className=' flex flex-row gap-4 pb-8 items-center justify-start'>
       <Checkbox
-      
         disabled={false}
         value={isCh}
         onValueChange={setCh}
@@ -61,10 +62,11 @@ export const Tasks = ({ task, id, isChecked, day }: TaskItem) => {
       />
 
       <View
-        className='fex flex-row justify-between min-w-fit items-center gap-5'
+        className='fex flex-row justify-between min-w-fit items-center w-full pr-8'
       >
         <View>
             <TextInput
+          
               ref={putRef}
               onBlur={()=>putVal === "" && setPutVal(task)}
               value={putVal}
@@ -80,19 +82,12 @@ export const Tasks = ({ task, id, isChecked, day }: TaskItem) => {
                     task: putVal
                   }, id)
               }}
-              className={twMerge('text-white text-2xl relative z-0')}
+              className={twMerge('dark:text-white text-disable text-2xl relative z-0')}
             />
           <View className={twMerge('absolute w-full h-1 !z-999 top-[50%] left-0', isCh && "bg-primary")} />
+        
         </View>
-        {
-          longP &&
-          <Pressable className=' bg-red rounded-full w-6 h-6 flex items-center justify-center'
-            onPress={() => deleteTask(id)}
-          >
-            <Text className='text-white'>X</Text>
-          </Pressable>
-
-        }
+        <MaterialIcons onPress={()=>deleteTask(id)} name="delete-outline" size={24} color={dark === "dark" ? "white":"black"} />
       </View>
     </View>
   )
@@ -103,7 +98,7 @@ export const Tasks = ({ task, id, isChecked, day }: TaskItem) => {
 const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
   const [put, setPut] = useState("")
   const refPut = useRef<TextInput>(null)
-  const { addTask, getTask, deleteTask } = useTask()
+  const { addTask, deleteTask } = useTask()
   const openHandler = (e: string) => {
     setOpen(e)
   }

@@ -10,7 +10,8 @@ module.exports = {
       black:"#000000",
       red:"#ff0000",
       disable:"#333333",
-      primary:"#ff6a00"
+      placeholder:"#444444",
+      primary:"#ff6a00",
     }
   },
   plugins: [],

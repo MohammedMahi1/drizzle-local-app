@@ -28,7 +28,7 @@ type TaskTriggerProps = {
 const TaskTrigger = ({ title, ...rest }: TaskTriggerProps) => {
   return (
     <Pressable className='px-8 py-16' {...rest}>
-      <Text className='text-disable dark:text-white text-6xl font-semibold'>{title}</Text>
+      <Text className='text-gray dark:text-white text-5xl font-bold'>{title}</Text>
     </Pressable>
   )
 }
@@ -96,7 +96,7 @@ export const Tasks = ({ task, id, isChecked, day }: TaskItem) => {
           <View className={twMerge('absolute w-full h-1 !z-999 top-[50%] left-0', isCh && "bg-primary")} />
 
         </View>
-        <MaterialIcons onPress={() => deleteTask(id)} name="delete-outline" size={24} color={dark === "dark" ? "white" : "black"} />
+        <MaterialIcons onPress={() => deleteTask(id)} name="delete-outline" size={24} color={"#ff0000"} />
       </View>
     </View>
   )
@@ -123,7 +123,7 @@ const TaskItem = ({ title, isOpen, setOpen, data }: TaskProps) => {
   }
 
   return (
-    <View className='border-b-2 border-disable'>
+    <View className='border-b-2 dark:border-disableDark border-disable'>
       <TaskTrigger
         title={title} onPress={() => {
           openHandler(title)

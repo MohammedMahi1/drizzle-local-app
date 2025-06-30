@@ -8,8 +8,10 @@ module.exports = {
     colors:{
       white:"#ffffff",
       black:"#000000",
+      gray:"#333333",
       red:"#ff0000",
-      disable:"#333333",
+      disableDark:"#707070",
+      disable:"#a6a6a6",
       placeholder:"#8c8c8c",
       primary:"#ff6a00",
     }
